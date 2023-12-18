@@ -33,6 +33,7 @@ struct ContentView: View {
                 }
               
             }
+            .navigationTitle("File Kayıt")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -65,16 +66,11 @@ struct ContentView: View {
                     
                     PhotoModelFileManager.instance.add(key: fileName, value: data!, withType: fileType)
                     
-                    
-                    print(selecteDocumentUrls[0])
+                
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }
-//            .sheet(isPresented: $showQuickLook, content: {
-//               let url = PhotoModelFileManager.instance.get(key: "2", type: "pdf")!
-//                PreviewController(url: url)
-//            })
         }
        
     }
