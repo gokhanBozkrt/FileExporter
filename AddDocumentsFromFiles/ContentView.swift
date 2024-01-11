@@ -24,7 +24,7 @@ struct ContentView: View {
                 ForEach(fileVM.savedFiles.keys.sorted(),id: \.self) { key in
                     NavigationLink {
                         let type = fileVM.savedFiles[key]
-                        let url = PhotoModelFileManager.instance.get(key: key, type: type!)!
+                        let url = DocumentSaverManager.instance.get(key: key, type: type!)!
                        PreviewController(url: url)
                     } label: {
                         Text(key)
@@ -59,13 +59,11 @@ struct ContentView: View {
                      let fileType = selecteDocumentUrls[0].pathExtension
                     let fileName = selecteDocumentUrls[0].deletingPathExtension().lastPathComponent
                     
-                    let data = try? Data(contentsOf: selecteDocumentUrls[0])
                     
                     fileVM.savedFiles[fileName] = fileType
                     fileVM.saveFileDetails()
                     
-                    PhotoModelFileManager.instance.add(key: fileName, value: data!, withType: fileType)
-                    
+                    DocumentSaverManager.instance.copy(key: fileName, value: selecteDocumentUrls[0], withType: fileType)
                 
                 case .failure(let error):
                     print(error.localizedDescription)

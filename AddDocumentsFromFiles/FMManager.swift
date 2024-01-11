@@ -7,9 +7,9 @@
 
 import Foundation
 
-class PhotoModelFileManager {
-    static let instance = PhotoModelFileManager()
-    let folderName = "downloaded_photos"
+class DocumentSaverManager {
+    static let instance = DocumentSaverManager()
+    let folderName = "added_documents"
     private init() {
         createFolderIfNeeded()
     }
@@ -48,6 +48,18 @@ class PhotoModelFileManager {
               }
         do {
             try value.write(to: url, options: .completeFileProtection)
+        } catch let error {
+            print("Error saving to file manager \(error.localizedDescription)")
+        }
+    }
+    
+    func copy(key: String, value: URL,withType type: String) {
+        guard let url = getImagePath(key: key, type: type) else {
+                  return
+              }
+        do {
+            try FileManager.default.copyItem(at: value ,to: url)
+            
         } catch let error {
             print("Error saving to file manager \(error.localizedDescription)")
         }
